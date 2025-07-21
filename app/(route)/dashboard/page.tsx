@@ -1,3 +1,4 @@
+import AudioRecorder from "@/components/AudioRecorder";
 import AuthGuard from "@/components/AuthGuard";
 import Dashboard from "@/components/Dashboard";
 import { apiClient } from "@/lib/api";
@@ -16,10 +17,10 @@ export default async function dashboardPage() {
     redirect("/completeRegistration");
   }
 
-
   return (
     <AuthGuard requireAuth={true}>
       <Dashboard response={response} />
+      <AudioRecorder />
     </AuthGuard>
   );
 }

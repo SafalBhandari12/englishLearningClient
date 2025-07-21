@@ -21,6 +21,21 @@ export type UserInfoResponse = {
   };
 };
 
+export type sendAnswerApiResponse = {
+  success: boolean;
+  url: string;
+  recognizedText: string;
+  assessment: Assessment;
+};
+
+export type Assessment = {
+  recognizedText: string;
+  accuracyScore: number;
+  pronunciationScore: number;
+  fluencyScore: number;
+  completenessScore: number;
+};
+
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";
 
@@ -32,54 +47,73 @@ class ApiClient {
     }
 
     const url = `${API_BASE_URL}/${endPoint}`;
+
+    // Build headers, omitting Content-Type for FormData bodies
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${tokens.accessToken}`,
+      ...(options.headers as Record<string, string>),
+    };
+    if (!(options.body instanceof FormData)) {
+      headers["Content-Type"] = "application/json";
+    }
+
     const response = await fetch(url, {
       ...options,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokens.accessToken}`,
-        ...options.headers,
-      },
+      headers,
     });
+
     if (response.status === 401) {
       try {
         const newTokens = await authService.refreshToken(tokens.refreshToken);
-        return fetch(url, {
+        // Retry original request with new access token
+        const retryHeaders: Record<string, string> = {
+          Authorization: `Bearer ${newTokens.accessToken}`,
+          ...(options.headers as Record<string, string>),
+        };
+        if (!(options.body instanceof FormData)) {
+          retryHeaders["Content-Type"] = "application/json";
+        }
+        const retryResponse = await fetch(url, {
           ...options,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${newTokens.accessToken}`,
-            ...options.headers,
-          },
+          headers: retryHeaders,
         });
+        return retryResponse.json();
       } catch {
         await removeToken();
         window.location.href = "/login";
       }
     }
+
     return response.json();
   }
+
   async protectedEndpoint(): Promise<{
     success: boolean;
     message: string;
-    user?: {
-      userId: string;
-      type: string;
-      role: "CANDIDATE" | "COMPANY";
-    };
+    user?: { userId: string; type: string; role: "CANDIDATE" | "COMPANY" };
   }> {
     return this.makeRequest("protected");
   }
+
   async userInfo(): Promise<UserInfoResponse> {
     return this.makeRequest("user");
   }
 
-  async completeRegistration(info: string): Promise<{
-    success: boolean;
-    message: string;
-  }> {
+  async completeRegistration(
+    info: string
+  ): Promise<{ success: boolean; message: string }> {
     return this.makeRequest("user/register", {
       method: "POST",
       body: JSON.stringify({ info }),
+    });
+  }
+  /**
+   * Send answer via multipart/form-data
+   */
+  async sendAnswerForm(formData: FormData): Promise<sendAnswerApiResponse> {
+    return this.makeRequest("user/answer", {
+      method: "POST",
+      body: formData,
     });
   }
 }

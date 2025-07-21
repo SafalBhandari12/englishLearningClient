@@ -1,3 +1,5 @@
+"use client";
+import uploadAnswer from "@/actions/dashboardAction";
 import React, { useEffect, useRef, useState } from "react";
 
 const AudioRecorder: React.FC = () => {
@@ -18,6 +20,23 @@ const AudioRecorder: React.FC = () => {
       }
     };
   }, []);
+
+  // Upload audio to backend
+  const uploadAudio = async (audioBlob: Blob) => {
+    try {
+      // Send as webm since that's the actual format from MediaRecorder
+      const file = new File([audioBlob], "pronunciation_input.webm", {
+        type: "audio/webm",
+      });
+      const formData = new FormData();
+      formData.append("audio", file); // Changed from "wav" to "audio"
+      const response = await uploadAnswer(formData);
+      console.log(response);
+    } catch (error) {
+      console.error("Error uploading audio:", error);
+      alert("Failed to upload audio. Please try again.");
+    }
+  };
 
   const startRecording = async (): Promise<void> => {
     try {
@@ -41,6 +60,8 @@ const AudioRecorder: React.FC = () => {
         }
         const url = URL.createObjectURL(blob);
         setAudioURL(url);
+        // Send to backend after recording stops
+        uploadAudio(blob);
       };
 
       setMediaRecorder(recorder);

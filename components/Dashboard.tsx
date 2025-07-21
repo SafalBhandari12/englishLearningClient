@@ -29,8 +29,6 @@ export default function Dashboard({
         <p className='self-end bg-gray-600 rounded-md max-w-max px-3 py-1 text-right text-white'>
           {response.user?.candidate?.nextQuestion}
         </p>
-        <input className=' border-2' placeholder='Answer..' />
-        <AudioRecorder />
       </div>
     </div>
   );
