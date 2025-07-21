@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
-import { authService, getToken, removeToken } from "./auth";
+import { authService } from "./auth";
+import { getToken, removeToken } from "./serverAuth";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";
@@ -53,14 +54,11 @@ class ApiClient {
     success: boolean;
     message: string;
     user?: {
-      id: string;
       email: string;
       name: string;
       emailVerified: boolean;
       role: string;
       candidate: {
-        name: string;
-        userId: string;
         context: string;
         accuracyScore: number;
         pronounciationScore: number;

@@ -1,6 +1,6 @@
-import { getCurrentUser } from "@/lib/auth";
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
+import { getCurrentUser } from "@/lib/serverAuth";
 
 export const Navbar = async () => {
   const user = await getCurrentUser();

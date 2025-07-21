@@ -1,5 +1,5 @@
 "use server";
-import { authService, getToken, removeToken, setToken } from "@/lib/auth";
+import { authService } from "@/lib/auth";
 import {
   LoginFormState,
   RegisterFormState,
@@ -14,6 +14,7 @@ import {
 import { error } from "console";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { getToken, removeToken, setToken } from "@/lib/serverAuth";
 export async function registerAction(
   prevState: RegisterFormState,
   formData: FormData

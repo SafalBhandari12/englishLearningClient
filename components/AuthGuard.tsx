@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/serverAuth";
 import { redirect } from "next/navigation";
 
 export default async function AuthGuard({
