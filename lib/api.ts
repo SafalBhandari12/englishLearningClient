@@ -36,6 +36,20 @@ export type Assessment = {
   completenessScore: number;
 };
 
+  export type ChatHistoryItemSchema = {
+    bot: string;
+    createdAt: string;
+    user: string;
+    userAudio: string;
+    id: string;
+  };
+
+  export type GetChatHistoryResponseSchema = {
+    success: boolean;
+    data: ChatHistoryItemSchema[];
+    nextCursor: string | null;
+  };
+
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";
 
@@ -107,14 +121,18 @@ class ApiClient {
       body: JSON.stringify({ info }),
     });
   }
-  /**
-   * Send answer via multipart/form-data
-   */
+
   async sendAnswerForm(formData: FormData): Promise<sendAnswerApiResponse> {
     return this.makeRequest("user/answer", {
       method: "POST",
       body: formData,
     });
+  }
+
+
+
+  async getChatHistory(): Promise<GetChatHistoryResponseSchema> {
+    return this.makeRequest("user/chatHistory");
   }
 }
 

@@ -1,5 +1,5 @@
 "use client";
-import uploadAnswer from "@/actions/dashboardAction";
+import { uploadAnswer } from "@/actions/dashboardAction";
 import React, { useEffect, useRef, useState } from "react";
 
 const AudioRecorder: React.FC = () => {
