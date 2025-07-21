@@ -2,6 +2,25 @@ import { redirect } from "next/navigation";
 import { authService } from "./auth";
 import { getToken, removeToken } from "./serverAuth";
 
+export type UserInfoResponse = {
+  success: boolean;
+  message: string;
+  user?: {
+    email: string;
+    name: string;
+    emailVerified: boolean;
+    role: string;
+    candidate: {
+      context: string;
+      accuracyScore: number;
+      pronounciationScore: number;
+      fluencyScore: number;
+      completenessScore: number;
+      nextQuestion: string;
+    } | null;
+  };
+};
+
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";
 
@@ -50,24 +69,7 @@ class ApiClient {
   }> {
     return this.makeRequest("protected");
   }
-  async userInfo(): Promise<{
-    success: boolean;
-    message: string;
-    user?: {
-      email: string;
-      name: string;
-      emailVerified: boolean;
-      role: string;
-      candidate: {
-        context: string;
-        accuracyScore: number;
-        pronounciationScore: number;
-        fluencyScore: number;
-        completenessScore: number;
-        nextQuestion: string;
-      } | null;
-    };
-  }> {
+  async userInfo(): Promise<UserInfoResponse> {
     return this.makeRequest("user");
   }
 
