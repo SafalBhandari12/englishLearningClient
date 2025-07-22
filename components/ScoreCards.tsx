@@ -14,19 +14,17 @@ type ScoreCardProps = {
 export default function ScoreCard({ candidate }: ScoreCardProps) {
   if (!candidate) return null;
   const {
-    context,
     accuracyScore,
     pronounciationScore,
     fluencyScore,
     completenessScore,
-    nextQuestion,
   } = candidate;
   return (
     <div className='flex justify-center gap-10'>
-      <p>Accuracy Score: {candidate.accuracyScore}</p>
-      <p>Pronunciation Score: {candidate?.pronounciationScore}</p>
-      <p>Fluency Score: {candidate?.fluencyScore}</p>
-      <p>Completeness Score: {candidate?.completenessScore}</p>{" "}
+      <p>Accuracy Score: {accuracyScore}</p>
+      <p>Pronunciation Score: {pronounciationScore}</p>
+      <p>Fluency Score: {fluencyScore}</p>
+      <p>Completeness Score: {completenessScore}</p>{" "}
     </div>
   );
 }

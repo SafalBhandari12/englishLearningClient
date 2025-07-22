@@ -11,7 +11,6 @@ import {
   userRegistrationSchema,
   verifyEmail,
 } from "@/validation/authValidation";
-import { error } from "console";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getToken, removeToken, setToken } from "@/lib/serverAuth";
@@ -165,7 +164,7 @@ export async function logoutAction() {
   }
   try {
     await authService.logout({ refreshToken: tokens.refreshToken });
-  } catch (error) {
+  } catch {
     console.log("There is some error with logout");
   }
   await removeToken();
