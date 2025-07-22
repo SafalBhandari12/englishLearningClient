@@ -36,22 +36,22 @@ export type Assessment = {
   completenessScore: number;
 };
 
-  export type ChatHistoryItemSchema = {
-    bot: string;
-    createdAt: string;
-    user: string;
-    userAudio: string;
-    id: string;
-  };
+export type ChatHistoryItemSchema = {
+  bot: string;
+  createdAt: string;
+  user: string;
+  userAudio: string;
+  id: string;
+};
 
-  export type GetChatHistoryResponseSchema = {
-    success: boolean;
-    data: ChatHistoryItemSchema[];
-    nextCursor: string | null;
-  };
+export type GetChatHistoryResponseSchema = {
+  success: boolean;
+  data: ChatHistoryItemSchema[];
+  nextCursor: string | null;
+};
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
 class ApiClient {
   private async makeRequest(endPoint: string, options: RequestInit = {}) {
@@ -128,8 +128,6 @@ class ApiClient {
       body: formData,
     });
   }
-
-
 
   async getChatHistory(): Promise<GetChatHistoryResponseSchema> {
     return this.makeRequest("user/chatHistory");

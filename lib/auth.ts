@@ -1,5 +1,6 @@
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL; ;
+
+console.log(API_BASE_URL);
 class AuthService {
   private async makeRequest(endPoint: string, options: RequestInit = {}) {
     const url = `${API_BASE_URL}/auth/${endPoint}`;
