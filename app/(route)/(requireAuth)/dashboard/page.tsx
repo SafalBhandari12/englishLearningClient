@@ -2,6 +2,7 @@
 
 import { getChatHistory, getResponse } from "@/actions/dashboardAction";
 import AudioRecorder from "@/components/AudioRecorder";
+import ScoreCard from "@/components/ScoreCards";
 import { GetChatHistoryResponseSchema, UserInfoResponse } from "@/lib/api";
 import { useCallback, useEffect, useState } from "react";
 
@@ -32,14 +33,7 @@ export default function DashboardPage() {
   return (
     <div className='flex flex-col'>
       {scores ? (
-        <div className='flex justify-center gap-10'>
-          <p>Accuracy Score: {scores.user?.candidate?.accuracyScore}</p>
-          <p>
-            Pronunciation Score: {scores.user?.candidate?.pronounciationScore}
-          </p>
-          <p>Fluency Score: {scores.user?.candidate?.fluencyScore}</p>
-          <p>Completeness Score: {scores.user?.candidate?.completenessScore}</p>
-        </div>
+        <ScoreCard candidate={scores.user?.candidate} />
       ) : (
         <p>Loading…</p>
       )}
