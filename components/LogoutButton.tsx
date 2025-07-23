@@ -1,11 +1,29 @@
 import { logoutAction } from "@/actions/auth";
+import { Button } from "./ui/button";
 
 export default function LogoutButton() {
   return (
     <form action={logoutAction}>
-      <button type='submit' className=' hover:text-gray-800 hover:underline hover:cursor-pointer'>
+      <Button
+        type='submit'
+        variant='neutral'
+        className='border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300'
+      >
+        <svg
+          className='w-4 h-4 mr-2'
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth={2}
+            d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'
+          />
+        </svg>
         Logout
-      </button>{" "}
+      </Button>
     </form>
   );
 }

@@ -2,56 +2,26 @@ import { redirect } from "next/navigation";
 import { authService } from "./auth";
 import { getToken, removeToken } from "./serverAuth";
 
-export type UserInfoResponse = {
-  success: boolean;
-  message: string;
-  user?: {
-    email: string;
-    name: string;
-    emailVerified: boolean;
-    role: string;
-    candidate: {
-      context: string;
-      accuracyScore: number;
-      pronounciationScore: number;
-      fluencyScore: number;
-      completenessScore: number;
-      nextQuestion: string;
-    } | null;
-  };
-};
+// Re-export types for backwards compatibility
+export type {
+  UserInfoResponse,
+  sendAnswerApiResponse,
+  Assessment,
+  ChatHistoryItemSchema,
+  GetChatHistoryResponseSchema,
+} from "@/types/apiTypes";
 
-export type sendAnswerApiResponse = {
-  success: boolean;
-  url: string;
-  recognizedText: string;
-  assessment: Assessment;
-};
-
-export type Assessment = {
-  recognizedText: string;
-  accuracyScore: number;
-  pronunciationScore: number;
-  fluencyScore: number;
-  completenessScore: number;
-};
-
-export type ChatHistoryItemSchema = {
-  bot: string;
-  createdAt: string;
-  user: string;
-  userAudio: string;
-  id: string;
-};
-
-export type GetChatHistoryResponseSchema = {
-  success: boolean;
-  data: ChatHistoryItemSchema[];
-  nextCursor: string | null;
-};
+import type {
+  UserInfoResponse,
+  sendAnswerApiResponse,
+  Assessment,
+  ChatHistoryItemSchema,
+  GetChatHistoryResponseSchema,
+} from "@/types/apiTypes";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://englishlearningserver.onrender.com/api";
 
 class ApiClient {
   private async makeRequest(endPoint: string, options: RequestInit = {}) {

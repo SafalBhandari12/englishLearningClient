@@ -3,14 +3,14 @@ import { cookies } from "next/headers";
 import { authService } from "./auth";
 
 export async function setToken(tokens: AuthTokens) {
-  const cookieStore = cookies();
-  (await cookieStore).set("accessToken", tokens.accessToken, {
+  const cookieStore = await cookies();
+  cookieStore.set("accessToken", tokens.accessToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: 15 * 60, //15 mins
   });
-  (await cookieStore).set("refreshToken", tokens.refreshToken, {
+  cookieStore.set("refreshToken", tokens.refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
@@ -19,17 +19,17 @@ export async function setToken(tokens: AuthTokens) {
 }
 
 export async function getToken(): Promise<AuthTokens | null> {
-  const cookie = cookies();
-  const accessToken = (await cookie).get("accessToken")?.value;
-  const refreshToken = (await cookie).get("refreshToken")?.value;
+  const cookie = await cookies();
+  const accessToken = cookie.get("accessToken")?.value;
+  const refreshToken = cookie.get("refreshToken")?.value;
   if (!accessToken || !refreshToken) return null;
   return { accessToken, refreshToken };
 }
 
 export async function removeToken() {
-  const cookie = cookies();
-  (await cookie).delete("accessToken");
-  (await cookie).delete("refreshToken");
+  const cookie = await cookies();
+  cookie.delete("accessToken");
+  cookie.delete("refreshToken");
 }
 
 export async function getCurrentUser() {
