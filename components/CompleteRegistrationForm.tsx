@@ -29,7 +29,7 @@ export default function CompleteRegistrationForm() {
       <form action={formAction} className='flex flex-col gap-4'>
         <textarea
           name='info'
-          placeholder='Write about your interests, hobbies, goals...'
+          placeholder="Write about your interests, hobbies, goals... (don't be shy!)"
           className='border border-blue-200 rounded-lg p-4 w-full h-32 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none text-gray-800 bg-blue-50/30 shadow-sm transition'
         />
         <button
