@@ -14,8 +14,6 @@ export type {
 import type {
   UserInfoResponse,
   sendAnswerApiResponse,
-  Assessment,
-  ChatHistoryItemSchema,
   GetChatHistoryResponseSchema,
 } from "@/types/apiTypes";
 
