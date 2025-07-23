@@ -122,9 +122,7 @@ export default function DashboardPage() {
             </div>
 
             <div className='p-6 space-y-4 max-h-96 overflow-y-auto'>
-              {[...chatHistory.data]
-                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                .map((item, index) => (
+              {chatHistory.data.map((item, index) => (
                 <div
                   key={item.id}
                   className='border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow'
