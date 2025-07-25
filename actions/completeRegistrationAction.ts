@@ -2,6 +2,7 @@
 
 import { apiClient } from "@/lib/api";
 import { formState } from "@/types/completeRegistration";
+import { redirect } from "next/navigation";
 
 export async function completeRegistrationAction(
   prevState: formState,
@@ -22,15 +23,17 @@ export async function completeRegistrationAction(
 
   // Call API
   const response = await apiClient.completeRegistration(info);
-  console.log(response)
+  console.log(response);
+
+  if (response.success === true) {
+    redirect("/dashboard");
+  }
 
   // Prepare next bot prompt (response.message) for next round
   updatedConversation.push({
     bot: response.message,
     human: "",
   });
-
-
 
   return {
     success: response.success,

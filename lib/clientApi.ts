@@ -1,9 +1,6 @@
 // Client-safe API functions that don't require server-side cookies
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://englishlearningserver.onrender.com/api";
-
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 // Health check API function (no authentication required)
 export const healthCheck = async (): Promise<{
   status: string;
