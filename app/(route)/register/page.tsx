@@ -25,7 +25,7 @@ export default function CardDemo() {
       <form action={formAction} className='w-full max-w-sm'>
         {state.success && (
           <div className='text-green-500 text-center mb-4'>
-            {state.message}Safal
+            {state.message}
           </div>
         )}
         {state.errors?.general && (
