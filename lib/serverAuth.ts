@@ -1,3 +1,5 @@
+"use server";
+
 import { AuthTokens, tokenPayload } from "@/types/authType";
 import { cookies } from "next/headers";
 import { authService } from "./auth";
