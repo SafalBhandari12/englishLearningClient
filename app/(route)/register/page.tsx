@@ -1,6 +1,5 @@
 "use client";
 import { registerAction } from "@/actions/auth";
-import { Button } from "@/components/ui/button";
 import LoadingButton from "@/components/LoadingButton";
 import {
   Card,

@@ -1,10 +1,11 @@
 "use client";
 
-interface LoadingButtonProps {
+import { ButtonHTMLAttributes, ReactNode } from "react";
+
+interface LoadingButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
-  [key: string]: any;
 }
 
 export default function LoadingButton({
